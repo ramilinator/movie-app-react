@@ -71,7 +71,7 @@ const App = () => {
       <div className="wrapper">
         <header>
           <h1>
-            Find <span className="text-gradient">Movies</span> You'll Enjoy
+            Discover <span className="text-gradient">Movies</span> You'll Love
             Without the Hassle
           </h1>
 
