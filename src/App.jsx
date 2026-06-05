@@ -25,6 +25,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [trendingMovies, setTrendingMovies] = useState([]);
+  const [page, setPage] = useState(1);
 
   // Debounce the search term to prevent making too many API requests
   // by waiting for the user to stop typing for 500ms
@@ -36,8 +37,10 @@ const App = () => {
 
     try {
       const endpoint = query
-        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
-        : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(
+            query,
+          )}&page=${page}`
+        : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc&page=${page}`;
 
       const response = await fetch(endpoint, API_OPTIONS);
 
@@ -47,24 +50,34 @@ const App = () => {
 
       const data = await response.json();
 
-      if (data.Response === "False") {
-        setErrorMessage(data.Error || "Failed to fetch movies");
+      console.log(data);
+
+      if (!data.results) {
+        setErrorMessage("No movies found");
         setMovieList([]);
         return;
       }
 
-      setMovieList(data.results || []);
+      setMovieList((prev) => [...prev, ...(data.results || [])]);
     } catch (error) {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage("Error fetching movies. Please try again later.");
     } finally {
       setIsLoading(false);
     }
+    console.log("Fetching movies...");
   };
+
+  console.log(movieList.map((movie) => movie.id));
+
+  useEffect(() => {
+    setMovieList([]);
+    setPage(1);
+  }, [debouncedSearchTerm]);
 
   useEffect(() => {
     fetchMovies(debouncedSearchTerm);
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, page]);
 
   return (
     <main className="bg">
@@ -107,6 +120,12 @@ const App = () => {
               ))}
             </ul>
           )}
+          <button
+            className="btn btn-primary"
+            onClick={() => setPage((prev) => prev + 1)}
+          >
+            Load More
+          </button>
         </section>
       </div>
     </main>
