@@ -26,6 +26,7 @@ const App = () => {
 
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   // Debounce the search term to prevent making too many API requests
   // by waiting for the user to stop typing for 500ms
@@ -65,15 +66,19 @@ const App = () => {
     } finally {
       setIsLoading(false);
     }
-    console.log("Fetching movies...");
+    setTotalPages(data.total_pages);
   };
 
   console.log(movieList.map((movie) => movie.id));
+
+  // Reset pagination on a new search
 
   useEffect(() => {
     setMovieList([]);
     setPage(1);
   }, [debouncedSearchTerm]);
+
+  // Fetch when page changes
 
   useEffect(() => {
     fetchMovies(debouncedSearchTerm);
@@ -120,8 +125,14 @@ const App = () => {
               ))}
             </ul>
           )}
+
+          <p>
+            Page {page} of {totalPages}
+          </p>
+
           <button
             className="btn btn-primary"
+            disabled={page >= totalPages}
             onClick={() => setPage((prev) => prev + 1)}
           >
             Load More
