@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getMovieDetails } from "../services/tmdb";
 
 export default function MovieDetailsPage() {
+  const navigate = useNavigate();
+
   const { id } = useParams();
 
   const [movie, setMovie] = useState(null);
@@ -32,6 +34,18 @@ export default function MovieDetailsPage() {
   return (
     <main>
       <div className="wrapper movie-details-wrapper">
+        <button
+          className="close-btn"
+          onClick={() => {
+            if (window.history.length > 1) {
+              navigate(-1);
+            } else {
+              navigate("/");
+            }
+          }}
+        >
+          ✕
+        </button>
         <div className="movie-poster">
           <img
             src={`https://image.tmdb.org/t/p/w500${poster_path}`}
