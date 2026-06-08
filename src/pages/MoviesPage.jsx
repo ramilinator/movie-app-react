@@ -20,7 +20,7 @@ export default function MoviesPage() {
         const data = await getPopularMovies(page);
 
         setMovies(data.results || []);
-        // setTotalPages(Math.min(data.total_pages, 500));
+        setTotalPages(Math.min(data.total_pages, 500));
       } catch (error) {
         console.error("Failed to fetch movies:", error);
       }
