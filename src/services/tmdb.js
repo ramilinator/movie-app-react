@@ -27,3 +27,14 @@ export async function getMovieDetails(id) {
 
   return response.json();
 }
+
+export async function searchMovies(query, page = 1) {
+  const response = await fetch(
+    `${API_BASE_URL}/search/movie?query=${encodeURIComponent(
+      query
+    )}&page=${page}`,
+    API_OPTIONS
+  );
+
+  return response.json();
+}
