@@ -41,6 +41,10 @@ export default function MoviesPage() {
         ? await searchMovies(query, page)
         : await getPopularMovies(page);
 
+      const moviesWithPosters = data.results.filter(
+        (movie) => movie.poster_path,
+      );
+
       setMovies(data.results || []);
       setTotalPages(Math.min(data.total_pages, 500));
     } catch (error) {
