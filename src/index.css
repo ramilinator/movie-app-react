@@ -35,6 +35,11 @@
     font-family: "DM Sans", serif;
     font-optical-sizing: auto;
     background: #030014;
+    color: white;
+  }
+
+  p {
+    color: white;
   }
 
   h1 {
@@ -116,6 +121,7 @@
 
   .movie-card {
     @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
+    display: block;
 
     & img {
       @apply rounded-lg h-auto w-full;
@@ -225,4 +231,27 @@
 
 .btn-block {
   width: 100%;
+}
+
+.pagination {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  font-weight: bold;
+  border: 2px solid currentColor;
+}
+
+.pagination-ellipsis {
+  padding: 0.5rem;
 }
