@@ -264,6 +264,7 @@
   flex-wrap: wrap;
   gap: 64px;
   min-height: calc(100vh - 120px);
+  width: calc(100vw - 120px);
   border: 1px solid #673AB7;
   margin: 50px auto;
   padding: 60px;

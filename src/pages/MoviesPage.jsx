@@ -9,6 +9,7 @@ import Pagination from "../components/Pagination";
 import { getPopularMovies, searchMovies } from "../services/tmdb";
 
 export default function MoviesPage() {
+  // Hooks
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,18 +24,6 @@ export default function MoviesPage() {
 
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
-  useEffect(() => {
-    const params = {};
-
-    if (debouncedSearchTerm) {
-      params.query = debouncedSearchTerm;
-    }
-
-    params.page = "1";
-
-    setSearchParams(params);
-  }, [debouncedSearchTerm]);
-
   async function fetchMovies() {
     try {
       const data = query
@@ -45,16 +34,12 @@ export default function MoviesPage() {
         (movie) => movie.poster_path,
       );
 
-      setMovies(data.results || []);
+      setMovies(moviesWithPosters);
       setTotalPages(Math.min(data.total_pages, 500));
     } catch (error) {
       console.error(error);
     }
   }
-
-  useEffect(() => {
-    fetchMovies();
-  }, [page, query]);
 
   const goToPage = (newPage) => {
     const params = {
@@ -68,6 +53,24 @@ export default function MoviesPage() {
     setSearchParams(params);
   };
 
+  useEffect(() => {
+    fetchMovies();
+  }, [page, query]);
+
+  useEffect(() => {
+    if (debouncedSearchTerm === query) return;
+
+    const params = {
+      page: "1",
+    };
+
+    if (debouncedSearchTerm) {
+      params.query = debouncedSearchTerm;
+    }
+
+    setSearchParams(params);
+  }, [debouncedSearchTerm, query, setSearchParams]);
+
   return (
     <main className="bg">
       <div className="wrapper">
@@ -76,9 +79,9 @@ export default function MoviesPage() {
             Discover <span className="text-gradient">Movies</span>
             You'll Love Without the Hassle
           </h1>
-
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>
+
         <section className="all-movies">
           <h2>Movies</h2>
 

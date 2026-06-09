@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const MovieCard = ({
   movie: {
@@ -11,10 +11,11 @@ const MovieCard = ({
     original_language,
   },
 }) => {
+  const location = useLocation();
   return (
     <li>
       <div className="movie-card">
-        <Link to={`/movie/${id}`}>
+        <Link to={`/movie/${id}`} state={{ from: location }}>
           <img
             src={
               poster_path

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getMovieDetails } from "../services/tmdb";
 
 export default function MovieDetailsPage() {
-  const navigate = useNavigate();
-
   const { id } = useParams();
 
   const [movie, setMovie] = useState(null);
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchMovie();
@@ -37,11 +38,9 @@ export default function MovieDetailsPage() {
         <button
           className="close-btn"
           onClick={() => {
-            if (window.history.length > 1) {
-              navigate(-1);
-            } else {
-              navigate("/");
-            }
+            const from = location.state?.from;
+
+            navigate(from ? `${from.pathname}${from.search}` : "/");
           }}
         >
           ✕
