@@ -38,3 +38,21 @@ export async function searchMovies(query, page = 1) {
 
   return response.json();
 }
+
+export async function getMovieVideos(movieId) {
+  const response = await fetch(
+    `${API_BASE_URL}/movie/${movieId}/videos`,
+    API_OPTIONS,
+  );
+
+  return response.json();
+}
+
+export async function getMovieCredits(movieId) {
+  const response = await fetch(
+    `${API_BASE_URL}/movie/${movieId}/credits`,
+    API_OPTIONS,
+  );
+
+  return response.json();
+}

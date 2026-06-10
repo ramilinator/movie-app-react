@@ -9,20 +9,29 @@ import Pagination from "../components/Pagination";
 import { getPopularMovies, searchMovies } from "../services/tmdb";
 
 export default function MoviesPage() {
-  // Hooks
-  const [movies, setMovies] = useState([]);
-  const [totalPages, setTotalPages] = useState(1);
+  // Router hooks
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // Values derived from URL
   const query = searchParams.get("query") || "";
-
-  // local search state
-  const [searchTerm, setSearchTerm] = useState(query);
-
   const page = Number(searchParams.get("page")) || 1;
 
+  // Component state
+  const [movies, setMovies] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+
+  // Search state
+  const [searchTerm, setSearchTerm] = useState(query);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(query);
 
-  useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
+  // Custom hooks
+  useDebounce(
+    () => {
+      setDebouncedSearchTerm(searchTerm);
+    },
+    500,
+    [searchTerm],
+  );
 
   async function fetchMovies() {
     try {
