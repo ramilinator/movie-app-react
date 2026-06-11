@@ -46,6 +46,14 @@ export default function MovieDetailsPage() {
     return <p>Loading...</p>;
   }
 
+  const backdropUrl = movie.backdrop_path
+    ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
+    : "/fallback-backdrop.jpg";
+
+  const posterUrl = movie.poster_path
+    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+    : "/fallback-poster.jpg";
+
   const {
     title,
     poster_path,
@@ -58,10 +66,17 @@ export default function MovieDetailsPage() {
     profile_path,
   } = movie;
 
+  const starRating = Math.round((vote_average || 0) / 2);
+
   return (
     <main>
-      <div className="movie-details-page wrapper">
-        <div className="discover-more-button">
+      <div
+        className="movie-details-page"
+        style={{
+          backgroundImage: `url(${backdropUrl})`,
+        }}
+      >
+        <section className="discover-more-button">
           <button
             className="close-btn"
             onClick={() => {
@@ -71,31 +86,50 @@ export default function MovieDetailsPage() {
           >
             ✕
           </button>
-        </div>
+        </section>
 
-        <section className="hero-section">
-          <div className="movie-overview-wrapper">
-            {/* Trailer */}
-            {trailer && (
-              <section className="movie-trailer">
-                <h2>Official Trailer</h2>
+        <div className="movie-hero-overlay">
+          <div className="movie-overview-wrapper wrapper">
+            <div className="trailer-and-overview">
+              <section className="movie-traile-section">
+                {trailer && (
+                  <div className="movie-trailer">
+                    <h2>Official Trailer</h2>
 
-                <div className="trailer-container">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${trailer.key}`}
-                    title={trailer.name}
-                    allowFullScreen
-                  />
-                </div>
+                    <div className="trailer-container">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${trailer.key}`}
+                        title={trailer.name}
+                        allowFullScreen
+                      />
+                    </div>
+                  </div>
+                )}
               </section>
-            )}
-            <div className="movie-overview">
-              <h1>{title}</h1>
-              <p>{overview || "No overview available."}</p>
-              <div className="movie-details-meta">
+              <section className="movie-overview">
+                <div className="movie-title-and-rating">
+                  <p className="movie-rating">
+                    {Array.from({ length: 5 }, (_, index) => (
+                      <img
+                        src="/star.svg"
+                        className={
+                          index < starRating ? "star filled" : "star empty"
+                        }
+                        alt=""
+                      />
+                    ))}
+
+                    <span className="movie-rating-score">
+                      {vote_average ? `${vote_average.toFixed(1)} / 10` : "N/A"}
+                    </span>
+                  </p>
+                  <h1>{title}</h1>
+                </div>
+
                 {genres?.length > 0 && (
                   <div className="genres">
-                    <label>Genre:</label>
+                    <label>Genre: </label>
+
                     {genres.map((genre) => (
                       <span key={genre.id} className="genre-badge">
                         {genre.name}
@@ -103,58 +137,37 @@ export default function MovieDetailsPage() {
                     ))}
                   </div>
                 )}
-                <div className="movie-stats">
-                  <p className="movie-rating">
-                    <label>Rating:</label>
-                    <img src="/star.svg" alt="Rating" />
-                    <span>
-                      {vote_average ? vote_average.toFixed(1) : "N/A"}
-                    </span>
-                  </p>
-                  <p>
-                    <label>Runtime:</label> {runtime ? `${runtime} min` : "N/A"}
-                  </p>
-                  <p>
-                    <label>Language:</label> {original_language?.toUpperCase()}
-                  </p>
-                  <p>
-                    <label>Release Date:</label> {release_date || "N/A"}
-                  </p>
+                <p>{overview || "No overview available."}</p>
+                <div className="movie-details-meta">
+                  <div className="movie-stats">
+                    <p className="movie-runtime">
+                      <label>Runtime:</label>{" "}
+                      {runtime ? `${runtime} min` : "N/A"}
+                    </p>
+                    <p className="movie-lang">
+                      <label>Language:</label>{" "}
+                      {original_language?.toUpperCase()}
+                    </p>
+                    <p className="release-date">
+                      <label>Release Date:</label> {release_date || "N/A"}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </section>
             </div>
-          </div>
-          <div className="movie-poster">
-            <h2>Movie Poster</h2>
-            <img
-              className="movie-poster-img"
-              src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-              alt={title}
-            />
-          </div>
-        </section>
 
-        {/* Cast */}
-        {cast.length > 0 && (
-          <section className="movie-cast">
-            <h2>Cast</h2>
-            <ul className="cast-grid">
-              {cast.map((actor) => (
-                <li key={actor.id} className="cast-card">
-                  <img
-                    src={
-                      actor.profile_path
-                        ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
-                        : "/no-avatar.png"
-                    }
-                    alt={actor.name}
-                  />
-                  <p>{actor.name}</p>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
+            <section className="movie-poster">
+              <h2>Movie Poster</h2>
+              <div className="movie-poster-image">
+                <img
+                  className="movie-poster-img"
+                  src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+                  alt={title}
+                />
+              </div>
+            </section>
+          </div>
+        </div>
       </div>
     </main>
   );
