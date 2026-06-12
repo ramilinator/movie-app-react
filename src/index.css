@@ -87,7 +87,7 @@
   }
 
   .search {
-    @apply w-full bg-dark-100/5 px-4 py-3 rounded-lg max-w-3xl mx-auto;
+    @apply w-full bg-dark-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
     background-color:
       color-mix(in oklab, var(--color-dark-100) 5%, #0000007d);
 
@@ -110,14 +110,21 @@
     align-items: center;
     justify-content: center;
     min-height: 45vh;
+    margin-top: 0;
+    padding-block: 60px;
   }
 
   .movie-page-header h1 {
-    @apply p-10;
+    @apply px-10;
+  }
+
+  .search-wrapper {
+    width: 100%;
+    @apply px-10;
   }
 
   .all-movies {
-    @apply space-y-9 pt-10;
+    @apply space-y-9 pt-5;
 
     & ul {
       @apply grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;

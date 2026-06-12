@@ -87,7 +87,9 @@ export default function MoviesPage() {
           Discover <span className="text-gradient">Movies</span>
           You'll Love Without the Hassle
         </h1>
-        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <div className="search-wrapper">
+          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        </div>
       </header>
       <div className="wrapper">
         <section className="all-movies">
