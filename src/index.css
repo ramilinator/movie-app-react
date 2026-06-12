@@ -256,52 +256,67 @@
 }
 
 .movie-details-page {
-
   background-size: cover;
 }
 
-.movie-overview-wrapper {
-  display: grid;
-  grid-template-columns: 60% 1fr;
-  gap: 5vh;
+.movie-hero-overlay {
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
   min-height: 100vh;
-  align-items: center;
+  width: 100vw;
+
 }
 
-.trailer-and-overview {
+.movie-hero-overlay::before {
+  position: absolute;
+  content: '';
+  width: 100%;
+  min-height: 100%;
+  background: linear-gradient(90deg,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 0, 0, 0.8) 25%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0) 100%);
+}
+
+.movie-overview-wrapper {
   display: flex;
-  flex-direction: column;
-  gap: 5vw;
+  align-items: flex-start;
 }
 
+.movie-hero.wrapper {
+  position: relative;
+  min-height: 100vh;
+  align-items: flex-start;
+  justify-content: center;
+}
 
 .movie-overview {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 50%;
 }
 
 .movie-overview h1 {
   text-align: left;
+  margin: 0;
 }
 
 .movie-trailer {
   max-width: 450px;
 }
 
-section.movie-poster {
-  max-height: calc(100vh - 120px);
-}
-
 .movie-poster-image {
   margin-top: 16px;
-  width: 25vw;
+  width: 400px;
 }
 
 .close-btn {
   position: absolute;
   top: 1rem;
-  right: 1rem;
+  left: 1rem;
 
   width: 40px;
   height: 40px;
@@ -354,6 +369,11 @@ section.movie-poster {
   opacity: 0.25;
 }
 
+.movie-more-details {
+  display: flex;
+  gap: 32px;
+}
+
 .trailer-container {
   margin-top: 1rem;
   overflow: hidden;
@@ -372,13 +392,12 @@ section.movie-poster {
   gap: 16px;
 }
 
-.movie-hero-overlay {
-  width: 100%;
-  min-height: 70vh;
+.cast-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-  background: linear-gradient(90deg,
-      rgba(0, 0, 0, 0.95) 0%,
-      rgba(0, 0, 0, 0.8) 25%,
-      rgba(0, 0, 0, 0.5) 50%,
-      rgba(0, 0, 0, 0) 100%);
+.cast-card img {
+  border-radius: 16px;
 }
