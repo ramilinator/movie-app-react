@@ -68,6 +68,11 @@ export default function MovieDetailsPage() {
 
   const starRating = Math.round((vote_average || 0) / 2);
 
+  const handleBack = () => {
+    const from = location.state?.from;
+    navigate(from ? `${from.pathname}${from.search}` : "/");
+  };
+
   return (
     <main>
       <div className="movie-details-page">
@@ -78,17 +83,24 @@ export default function MovieDetailsPage() {
           }}
         >
           <div className="movie-hero wrapper">
-            <section className="discover-more-button">
-              <button
-                className="close-btn"
-                onClick={() => {
-                  const from = location.state?.from;
-                  navigate(from ? `${from.pathname}${from.search}` : "/");
-                }}
-              >
-                ✕
+            <section className="discover-more">
+              <button className="back-btn" onClick={handleBack}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
               </button>
             </section>
+
             <section className="movie-overview">
               <div className="movie-title-and-rating">
                 <p className="movie-rating">
