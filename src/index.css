@@ -26,14 +26,12 @@
     background: url("https://images.unsplash.com/photo-1730830741396-ffb85bb2e983?q=80&w=1470&auto=format&fit=crop");
     background-size: 100%;
     background-repeat: no-repeat;
-    width: 100%;
-    height: 100px;
   }
 
   body {
     font-family: "DM Sans", serif;
     font-optical-sizing: auto;
-    background: #030014;
+    background: #19212E;
     color: white;
   }
 
@@ -47,10 +45,6 @@
 
   h2 {
     @apply text-2xl font-bold text-white sm:text-3xl;
-  }
-
-  main {
-    @apply min-h-screen relative bg-primary;
   }
 
   header {
@@ -110,6 +104,14 @@
     }
   }
 
+  .movie-page-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 45vh;
+  }
+
   .all-movies {
     @apply space-y-9 pt-10;
 
@@ -119,7 +121,11 @@
   }
 
   .movie-card {
-    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
+    @apply bg-dark-100 p-5 rounded-2xl;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
     display: block;
 
     & img {
@@ -264,8 +270,7 @@
   position: relative;
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: 100vh;
-  width: 100vw;
+  min-height: 75vh;
   display: flex;
 
 }

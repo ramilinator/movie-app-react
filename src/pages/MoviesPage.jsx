@@ -81,16 +81,15 @@ export default function MoviesPage() {
   }, [debouncedSearchTerm, query, setSearchParams]);
 
   return (
-    <main className="bg">
+    <main>
+      <header className="movie-page-header bg">
+        <h1>
+          Discover <span className="text-gradient">Movies</span>
+          You'll Love Without the Hassle
+        </h1>
+      </header>
       <div className="wrapper">
-        <header>
-          <h1>
-            Discover <span className="text-gradient">Movies</span>
-            You'll Love Without the Hassle
-          </h1>
-          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        </header>
-
+        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <section className="all-movies">
           <h2>Movies</h2>
 
