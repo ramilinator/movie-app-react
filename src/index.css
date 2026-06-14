@@ -302,18 +302,18 @@
   align-items: flex-start;
 }
 
-.movie-hero.wrapper {
+.movie-hero {
   position: relative;
-
   align-items: flex-start;
   justify-content: space-around;
+  gap: 64px;
+  padding-block: 64px
 }
 
 .movie-overview {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-bottom: 50px;
   width: 100%;
 }
 
